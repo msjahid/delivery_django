@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <h2>Parcel Form</h2>
+
+  <form method="post" id="parcelForm" data-quantities-url="{% url 'ajax_load_quantities' %}" novalidate>
+    {% csrf_token %}
+    <table>
+      {{ form.as_table }}
+    </table>
+    <button type="submit">Save</button>
+    <a href="{% url 'parcel_changelist' %}">Nevermind</a>
+  </form>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    $("#id_location").change(function () {
+      var url = $("#parcelForm").attr("data-quantities-url");
+      var locationId = $(this).val();
+
+      $.ajax({
+        url: url,
+        data: {
+          'location': locationId
+        },
+        success: function (data) {
+          $("#id_quantity").html(data);
+        }
+      });
+
+    });
+  </script>
+
+{% endblock %}

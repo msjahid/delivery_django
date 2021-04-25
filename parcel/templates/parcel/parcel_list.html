@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Human Resources Module{% endblock %}
+
+{% block content %}
+  <h2>Human Resources Module » delivery Management</h2>
+
+  <p>
+    <a href="{% url 'parcel_add' %}">Add parcel</a>
+  </p>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Merchant Name</th>
+        <th>Product Type</th>
+        <th>Merchant Invoice Id</th>
+        <th>Delivery Location</th>
+        <th>Quantity</th>
+        <th>Delivery Charge</th>
+        <th>Cod Charge</th>
+        <th>Return Charge</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for parcel in delivery %}
+        <tr>
+          <td><a href="{% url 'parcel_change' parcel.pk %}">{{ parcel.merchantName }}</a></td>
+          <td>{{ parcel.productType }}</td>
+          <td>{{ parcel.invoiceID }}</td>
+          <td>{{ parcel.location.name }}</td>
+          <td>{{ parcel.quantity.name }}</td>
+          <td>{{ parcel.cod }}</td>
+          <td>{{ parcel.returnCharge }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="4">No parcel in the database. <a href="{% url 'parcel_add' %}">Add the first parcel</a>.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}
