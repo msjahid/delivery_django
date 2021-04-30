@@ -1,22 +1,25 @@
 from django.contrib import admin
-from .models import Order
-from .models import Merchant
-from .models import Charge
-from .models import Product
+from .models import Merchant, Order
+
+admin.site.site_header = "Delivery System"
 
 
-# Register your models here.
+@admin.register(Merchant)
+class MerchantAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'contact', 'address']
+    list_display_links = ['name']
+    list_filter = ['name']
 
-# Type
+
+# @admin.register(Charge)
+# class ChargeAdmin(admin.ModelAdmin):
+#     list_display = ['id', 'location', 'quantity', 'charge']
+#     list_display_links = ['location']
+#     list_filter = ['location', 'quantity']
+
+
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'merchantName', 'productType', 'invoiceID', 'location', 'quantity', 'charge', 'cod',
-                    'returnCharge', 'total', 'order_data']
-    list_display_links = ['id']
-    list_filter = ['invoiceID']
-    ordering = ['-id']
-
-
-admin.site.register(Merchant)
-admin.site.register(Charge)
-admin.site.register(Product)
+    list_display = ['id', 'merchant', 'product_type', 'invoice_id', 'location', 'quantity', 'price', 'order_datetime']
+    list_display_links = ['merchant']
+    list_filter = ['merchant']
