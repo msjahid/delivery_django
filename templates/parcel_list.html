@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Delivery{% endblock %}
+
+{% block content %}
+    <p>
+        <a href="{% url 'parcel_add' %}">
+            <button type="button" class="btn btn-primary">Add parcel</button>
+        </a>
+    </p>
+    <h2>History of Delivery</h2>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Product</th>
+            <th>Invoice</th>
+            <th>Location</th>
+            <th>Quantity</th>
+            <th>Charge</th>
+            <th>Cod</th>
+            <th>Return</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for parcel in parcels %}
+            <tr>
+                <td><a href="{% url 'parcel_edit' parcel.pk %}">{{ parcel.merchantName }}</a></td>
+                <td>{{ parcel.productType }}</td>
+                <td>{{ parcel.invoiceID }}</td>
+                <td>{{ parcel.location }}</td>
+                <td>{{ parcel.quantity }}</td>
+                <td>{{ parcel.charge }}</td>
+                <td>{{ parcel.cod }}</td>
+                <td>{{ parcel.returnCharge }}</td>
+                <td>{{ parcel.total }}</td>
+            </tr>
+            {% empty %}
+            <tr class="table-active">
+                <td colspan="4">No parcel Store.<a href="{% url 'parcel_add' %}">
+                <button type="button" class="btn btn-primary">Add the first parcel</button></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
